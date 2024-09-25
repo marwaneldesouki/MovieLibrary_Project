@@ -1,0 +1,207 @@
+﻿@model MovieLibrary_Project.Models.Media
+<div class="hero mv-single-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- <h1> movie listing - list</h1>
+				<ul class="breadcumb">
+					<li class="active"><a href="#">Home</a></li>
+					<li> <span class="ion-ios-arrow-right"></span> movie listing</li>
+				</ul> -->
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-single movie-single movie_single">
+	<div class="container">
+		<div class="row ipad-width2">
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<div class="movie-img sticky-sb">
+					<img src="~/images/uploads/@Model.PosterPath" alt="">
+					<div class="movie-btn">
+						<div class="btn-transform transform-vertical red">
+							<div>
+								<a href="#" class="item item-1 redbtn"> <i class="ion-play"></i> Watch Trailer</a>
+							</div>
+							<div>
+								<a href="https://www.youtube.com/embed/o-0hcF97wy0"
+								   class="item item-2 redbtn fancybox-media hvr-grow"><i class="ion-play"></i></a>
+							</div>
+						</div>
+						<div class="btn-transform transform-vertical">
+							<div>
+								<a href="#" class="item item-1 yellowbtn"> <i class="ion-card"></i> Buy ticket</a>
+							</div>
+							<div><a href="#" class="item item-2 yellowbtn"><i class="ion-card"></i></a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8 col-sm-12 col-xs-12">
+				<div class="movie-single-ct main-content">
+					<h1 class="bd-hd">@Model.Title <span>@Model.ReleaseDate.Year</span></h1>
+					<div class="social-btn">
+						<a href="#" class="parent-btn"><i class="ion-heart"></i> Add to Favorite</a>
+						<div class="hover-bnt">
+							<a href="#" class="parent-btn"><i class="ion-android-share-alt"></i>share</a>
+							<div class="hvr-item">
+								<a href="#" class="hvr-grow"><i class="ion-social-facebook"></i></a>
+								<a href="#" class="hvr-grow"><i class="ion-social-twitter"></i></a>
+								<a href="#" class="hvr-grow"><i class="ion-social-googleplus"></i></a>
+								<a href="#" class="hvr-grow"><i class="ion-social-youtube"></i></a>
+							</div>
+						</div>
+					</div>
+					<div class="movie-rate">
+						<div class="rate">
+							<i class="ion-android-star"></i>
+							<p>
+								<span>@Model.Rating</span> /10<br>
+								<span class="rv">56 Reviews</span>
+							</p>
+						</div>
+						<div class="rate-star">
+							<p>Rate This Movie: </p>
+							@for (int i = 0; i < Model.Rating; i++)
+							{
+							<i class="ion-ios-star"></i>
+							}
+							@for (int i = 1; i <= Math.Floor(Math.Abs(Model.Rating-10)); i++)
+							{
+								
+							<i class="ion-ios-star-outline"></i>
+							}
+						</div>
+					</div>
+					<div class="movie-tabs">
+						<div class="tabs">
+							<ul class="tab-links tabs-mv">
+								<li class="active"><a href="#overview">Overview</a></li>
+								<li><a href="#cast"> Cast & Crew </a></li>
+							</ul>
+							<div class="tab-content">
+								<div id="overview" class="tab active">
+									<div class="row">
+										<div class="col-md-8 col-sm-12 col-xs-12">
+											<p>
+												@Model.Description
+											</p>
+											
+											<div class="title-hd-sm">
+												<h4>cast</h4>
+												<a href="#" class="time">
+													Full Cast & Crew <i class="ion-ios-arrow-right"></i>
+												</a>
+											</div>
+											<!-- movie cast -->
+											<div class="mvcast-item">
+												@foreach (var cast in Model.Casts)
+												{
+												<div class="cast-it">
+													<div class="cast-left">
+														<img src="~/@cast.PersonImage" alt="">
+														<a href="#">@cast.RealName</a>
+													</div>
+													<p>... @cast.NameInMedia</p>
+												</div>
+												}
+											</div>
+										</div>
+										<div class="col-md-4 col-xs-12 col-sm-12">
+											<div class="sb-it">
+												<h6>Director: </h6>
+												<p><a href="#">@Model.Director</a></p>
+											</div>
+											<div class="sb-it">
+												<h6>Writer: </h6>
+												<p><a href="#">@Model.Director,</a> <a href="#">@Model.Writer</a></p>
+											</div>
+											<div class="sb-it">
+												<h6>Stars: </h6>
+												<p>
+													@foreach (var item in Model.Casts)
+													{
+														<a href="#">@item.NameInMedia</a>
+													}
+												</p>
+											</div>
+											<div class="sb-it">
+												<h6>Genres:</h6>
+												<p>
+													@foreach (var genre in Model.Genres)
+													{
+														
+														<a href="#">@genre.Name</a>
+													}
+												</p>
+											</div>
+											<div class="sb-it">
+												<h6>Release Date:</h6>
+												<p>@Model.ReleaseDate.ToString("MMM d, yyyy")</p>
+											</div>
+											
+											<div class="ads">
+												<img src="~/images/uploads/ads1.png" alt="">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="cast" class="tab">
+									<div class="row">
+										<h3>Cast & Crew of</h3>
+										<h2>@Model.Title</h2>
+										<!-- //== -->
+										<div class="title-hd-sm">
+											<h4>Directors & Credit Writers</h4>
+										</div>
+										<div class="mvcast-item">
+											<div class="cast-it">
+												<div class="cast-left">
+													<h4>@Model.Director.Split(" ")[0][0]@Model.Director.Split(" ")[1][0]</h4>
+													<a href="#">@Model.Director</a>
+												</div>
+												<p>... Director</p>
+											</div>
+										</div>
+										<!-- //== -->
+										<div class="title-hd-sm">
+											<h4>Directors & Credit Writers</h4>
+										</div>
+										<div class="mvcast-item">
+											<div class="cast-it">
+												<div class="cast-left">
+													<h4>@Model.Writer.Split(" ")[0][0]@Model.Writer.Split(" ")[1][0]</h4>
+													<a href="#">@Model.Writer</a>
+												</div>
+												<p>... Writer</p>
+											</div>
+										</div>
+										<!-- //== -->
+										<div class="title-hd-sm">
+											<h4>Cast</h4>
+										</div>
+										<div class="mvcast-item">
+											@foreach (var cast in Model.Casts)
+											{
+												<div class="cast-it">
+													<div class="cast-left">
+														<img src="~/@cast.PersonImage" alt="">
+														<a href="#">@cast.RealName</a>
+													</div>
+													<p>... @cast.NameInMedia</p>
+												</div>
+											}
+										</div>
+										<!-- //== -->
+									</div>
+								</div>
+								
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,114 @@
+﻿@model MovieLibrary_Project.Models.MediaEditViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Media.Id" />
+
+    <div class="form-group">
+        <label asp-for="Media.Title"></label>
+        <input asp-for="Media.Title" class="form-control" />
+        <span asp-validation-for="Media.Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Media.Description"></label>
+        <textarea asp-for="Media.Description" class="form-control"></textarea>
+        <span asp-validation-for="Media.Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Media.Rating"></label>
+        <input asp-for="Media.Rating" class="form-control" type="number" step="0.1" />
+        <span asp-validation-for="Media.Rating" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Media.Director"></label>
+        <input asp-for="Media.Director" class="form-control" />
+        <span asp-validation-for="Media.Director" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Media.Writer"></label>
+        <input asp-for="Media.Writer" class="form-control" />
+        <span asp-validation-for="Media.Writer" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Media.ReleaseDate"></label>
+        <input asp-for="Media.ReleaseDate" class="form-control" type="date" />
+        <span asp-validation-for="Media.ReleaseDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Media.PosterPath"></label>
+        <input asp-for="Media.PosterPath" class="form-control" />
+        <span asp-validation-for="Media.PosterPath" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Casts</label>
+        <select id="castSelect" class="form-control" multiple>
+            @foreach (var cast in Model.AvailableCasts)
+            {
+                <option value="@cast.Value" 
+                    selected="@Model.SelectedCasts.Contains(cast.Value)">
+                    @cast.Text
+                </option>
+            }
+        </select>
+        <button type="button" id="addCast" class="btn btn-primary">Add Cast</button>
+        <div id="selectedCasts" class="mt-2"></div>
+    </div>
+
+    <div class="form-group">
+        <label>Genres</label>
+        <select id="genreSelect" class="form-control" multiple>
+            @foreach (var genre in Model.AvailableGenres)
+            {
+                <option value="@genre.Value" 
+                    selected="@Model.SelectedGenres.Contains(genre.Value)">
+                    @genre.Text
+                </option>
+            }
+        </select>
+        <button type="button" id="addGenre" class="btn btn-primary">Add Genre</button>
+        <div id="selectedGenres" class="mt-2"></div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Update Media</button>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#addCast').click(function() {
+                var selected = $('#castSelect').val();
+                if (selected) {
+                    selected.forEach(function(id) {
+                        var option = $('#castSelect option[value="' + id + '"]');
+                        var text = option.text();
+                        $('#selectedCasts').append('<div class="selected-item" data-id="' + id + '">' + text + ' <button class="remove-item btn btn-danger btn-sm">Remove</button></div>');
+                    });
+                }
+            });
+
+            $('#addGenre').click(function() {
+                var selected = $('#genreSelect').val();
+                if (selected) {
+                    selected.forEach(function(id) {
+                        var option = $('#genreSelect option[value="' + id + '"]');
+                        var text = option.text();
+                        $('#selectedGenres').append('<div class="selected-item" data-id="' + id + '">' + text + ' <button class="remove-item btn btn-danger btn-sm">Remove</button></div>');
+                    });
+                }
+            });
+
+            $(document).on('click', '.remove-item', function() {
+                $(this).parent('.selected-item').remove();
+            });
+        });
+    </script>
+}

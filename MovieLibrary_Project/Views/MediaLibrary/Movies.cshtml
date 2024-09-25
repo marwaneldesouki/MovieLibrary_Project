@@ -1,0 +1,105 @@
+﻿@model IEnumerable<MovieLibrary_Project.Models.Media>
+
+@{
+    ViewData["Title"] = "Movies List";
+}
+
+@* <h2>Movies</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Rating</th>
+            <th>Release Date</th>
+            <th>Cast</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td>@movie.Title</td>
+                <td>@movie.Rating</td>
+                <td>@movie.ReleaseDate.ToShortDateString()</td>
+                <td>@movie.Cast</td>
+                <td>@movie.Description.Substring(0, Math.Min(50, movie.Description.Length))...</td>
+                <td>
+                    <a href="@Url.Action("Details", "Movies", new { id = movie.Id })" class="btn btn-info">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> *@
+<div class="hero common-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1>Movie Listing - Grid Fullwidth</h1>
+					<ul class="breadcumb">
+						<li class="active"><a href="#">Home</a></li>
+						<li> <span class="ion-ios-arrow-right"></span> movie listing</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-single">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="topbar-filter fw">
+					<p>Found <span>@Model.Count() movies</span> in total</p>
+					<label>Sort by:</label>
+					<select>
+						<option value="popularity">Popularity Descending</option>
+						<option value="popularity">Popularity Ascending</option>
+						<option value="rating">Rating Descending</option>
+						<option value="rating">Rating Ascending</option>
+						<option value="date">Release date Descending</option>
+						<option value="date">Release date Ascending</option>
+					</select>
+				</div>
+				<div class="flex-wrap-movielist mv-grid-fw">
+					
+					@foreach (var movie in Model)
+					{
+						<div class="movie-item-style-2 movie-item-style-1">
+							<img src="~/images/uploads/@movie.PosterPath" alt="">
+							<div class="hvr-inner">
+								<a href="@Url.Action("Details", "MediaLibrary", new { id = movie.Id })"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+							</div>
+							<div class="mv-item-infor">
+								<h6><a href="@Url.Action("Details", "MediaLibrary", new { id = movie.Id })">@movie.Title</a></h6>
+								<p class="rate"><i class="ion-android-star"></i><span>@movie.Rating</span> /10</p>
+							</div>
+						</div>
+					}
+
+				</div>
+				<div class="topbar-filter">
+					<label>Movies per page:</label>
+					<select>
+						<option value="range">20 Movies</option>
+						<option value="saab">10 Movies</option>
+					</select>
+
+					<div class="pagination2">
+						<span>Page 1 of 2:</span>
+						<a class="active" href="#">1</a>
+						<a href="#">2</a>
+						<a href="#">3</a>
+						<a href="#">...</a>
+						<a href="#">78</a>
+						<a href="#">79</a>
+						<a href="#"><i class="ion-arrow-right-b"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
